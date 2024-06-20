@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getParticipantById, createParticipant, updateParticipant } from '../services/ParticipantService';
+import { getAllDisciplines } from '../services/DisciplineService';
 import '../styling/ParticipantForm.css';
 
 const ParticipantForm: React.FC = () => {
@@ -12,19 +13,25 @@ const ParticipantForm: React.FC = () => {
     const [gender, setGender] = useState('');
     const [age, setAge] = useState<number | undefined>();
     const [club, setClub] = useState('');
+    const [disciplines, setDisciplines] = useState<any[]>([]);
+    const [selectedDisciplines, setSelectedDisciplines] = useState<string[]>([]);
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        if (isEditing) {
-            const fetchData = async () => {
+        const fetchData = async () => {
+            const disciplinesData = await getAllDisciplines();
+            setDisciplines(disciplinesData);
+
+            if (isEditing) {
                 const participant = await getParticipantById(Number(id));
                 setName(participant.name);
                 setGender(participant.gender);
                 setAge(participant.age);
                 setClub(participant.club);
-            };
-            fetchData();
-        }
+                setSelectedDisciplines(participant.disciplines.map((d: any) => d.id));
+            }
+        };
+        fetchData();
     }, [id, isEditing]);
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -33,7 +40,7 @@ const ParticipantForm: React.FC = () => {
             setError('All fields are required');
             return;
         }
-        const participant = { name, gender, age, club };
+        const participant = { name, gender, age, club, disciplines: selectedDisciplines };
         try {
             if (isEditing) {
                 await updateParticipant(Number(id), participant);
@@ -44,6 +51,16 @@ const ParticipantForm: React.FC = () => {
         } catch (error) {
             setError('An error occurred while saving the participant');
         }
+    };
+
+    const handleDisciplineChange = (disciplineId: string) => {
+        setSelectedDisciplines(prev => {
+            if (prev.includes(disciplineId)) {
+                return prev.filter(id => id !== disciplineId);
+            } else {
+                return [...prev, disciplineId];
+            }
+        });
     };
 
     return (
@@ -70,6 +87,21 @@ const ParticipantForm: React.FC = () => {
                 <div>
                     <label>Club</label>
                     <input type="text" value={club} onChange={(e) => setClub(e.target.value)} />
+                </div>
+                <div>
+                    <label>Disciplines</label>
+                    <div className="disciplines-list">
+                        {disciplines.map(discipline => (
+                            <div key={discipline.id}>
+                                <input
+                                    type="checkbox"
+                                    checked={selectedDisciplines.includes(discipline.id)}
+                                    onChange={() => handleDisciplineChange(discipline.id)}
+                                />
+                                {discipline.name} ({discipline.resultType})
+                            </div>
+                        ))}
+                    </div>
                 </div>
                 <button type="submit">{isEditing ? 'Update' : 'Create'}</button>
             </form>

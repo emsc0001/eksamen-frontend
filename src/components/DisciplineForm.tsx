@@ -38,11 +38,11 @@ const DisciplineForm: React.FC = () => {
             <form onSubmit={handleSubmit}>
                 <div>
                     <label>Name</label>
-                    <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+                    <input type="text" value={name} onChange={(e) => setName(e.target.value)} required />
                 </div>
                 <div>
                     <label>Result Type</label>
-                    <select value={resultType} onChange={(e) => setResultType(e.target.value)}>
+                    <select value={resultType} onChange={(e) => setResultType(e.target.value)} required>
                         <option value="">Select Result Type</option>
                         <option value="time">Time</option>
                         <option value="distance">Distance</option>

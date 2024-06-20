@@ -1,27 +1,30 @@
 import React, { useEffect, useState } from 'react';
-import { getAllDisciplines } from '../services/DisciplineService';
 import { Link } from 'react-router-dom';
-import '../styling/DisciplineList.css';
+import { getAllDisciplines } from '../services/DisciplineService';
 
 const DisciplineList: React.FC = () => {
     const [disciplines, setDisciplines] = useState<any[]>([]);
 
     useEffect(() => {
         const fetchData = async () => {
-            const result = await getAllDisciplines();
-            setDisciplines(result);
+            try {
+                const result = await getAllDisciplines();
+                setDisciplines(result);
+            } catch (error) {
+                console.error('Error fetching disciplines:', error);
+            }
         };
         fetchData();
     }, []);
 
     return (
-        <div className="discipline-list">
+        <div>
             <h2>Disciplines</h2>
-            <Link to="/disciplines/new">Create New Discipline</Link>
+            <Link to="/disciplines/new" className="button">Create New Discipline</Link>
             <ul>
                 {disciplines.map(discipline => (
                     <li key={discipline.id}>
-                        {discipline.name} - {discipline.resultType} - <Link to={`/disciplines/edit/${discipline.id}`}>Edit</Link>
+                        {discipline.name} ({discipline.resultType})
                     </li>
                 ))}
             </ul>
