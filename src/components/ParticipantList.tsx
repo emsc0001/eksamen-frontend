@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { getAllParticipants, searchParticipants } from '../services/ParticipantService';
+import { getAllParticipants, searchParticipants, deleteParticipant } from '../services/ParticipantService';
 import '../styling/ParticipantList.css';
 
 const ParticipantList: React.FC = () => {
@@ -57,6 +57,18 @@ const ParticipantList: React.FC = () => {
         return 'Unknown';
     };
 
+    const handleDelete = async (id: number) => {
+        if (window.confirm('Are you sure you want to delete this participant?')) {
+            try {
+                await deleteParticipant(id);
+                setParticipants(participants.filter(participant => participant.id !== id));
+                setFilteredParticipants(filteredParticipants.filter(participant => participant.id !== id));
+            } catch (error) {
+                console.error('Failed to delete participant', error);
+            }
+        }
+    };
+
     const indexOfLastParticipant = currentPage * participantsPerPage;
     const indexOfFirstParticipant = indexOfLastParticipant - participantsPerPage;
     const currentParticipants = filteredParticipants.slice(indexOfFirstParticipant, indexOfLastParticipant);
@@ -91,8 +103,11 @@ const ParticipantList: React.FC = () => {
             <ul>
                 {currentParticipants.map(participant => (
                     <li key={participant.id}>
-                        {participant.name} - {participant.gender} - {participant.age} - {getAgeGroup(participant.age)} - {participant.club} - 
+                        <Link to={`/participants/${participant.id}`}>
+                            {participant.name} - {participant.gender} - {participant.age} - {getAgeGroup(participant.age)} - {participant.club}
+                        </Link>
                         <Link to={`/participants/edit/${participant.id}`}>Edit</Link>
+                        <button onClick={() => handleDelete(participant.id)}>Delete</button>
                     </li>
                 ))}
             </ul>

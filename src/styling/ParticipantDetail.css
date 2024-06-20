@@ -1,0 +1,46 @@
+.participant-detail {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.participant-detail h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.participant-detail p {
+    font-size: 16px;
+    margin: 10px 0;
+}
+
+.participant-detail h3 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.participant-detail ul {
+    list-style: none;
+    padding: 0;
+}
+
+.participant-detail ul li {
+    padding: 5px 0;
+}
+
+.participant-detail button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+
+.participant-detail button:hover {
+    background-color: #0056b3;
+}

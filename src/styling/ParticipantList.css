@@ -1,59 +1,105 @@
+/* participant-list.css */
 .participant-list {
-    background-color: white;
+    max-width: 1200px;
+    margin: 0 auto;
     padding: 20px;
+    background: white;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .participant-list h2 {
-    margin-top: 0;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.participant-list a.button {
+    display: inline-block;
+    margin-bottom: 20px;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.participant-list a.button:hover {
+    background-color: #66BB6A;
+}
+
+.participant-list div {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.participant-list label {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.participant-list select,
+.participant-list input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
 }
 
 .participant-list ul {
-    list-style-type: none;
+    list-style: none;
     padding: 0;
 }
 
 .participant-list ul li {
-    background-color: #f1f1f1;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 4px;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.participant-list ul li:last-child {
+    border-bottom: none;
 }
 
 .participant-list ul li a {
-    color: #007bff;
+    color: #4CAF50;
     text-decoration: none;
+    font-weight: bold;
     margin-left: 10px;
+    transition: color 0.3s;
 }
 
 .participant-list ul li a:hover {
-    text-decoration: underline;
+    color: #388E3C;
 }
 
-.participant-list .button {
-    display: inline-block;
-    background-color: #28a745;
+.participant-list ul li button {
+    background-color: #f44336;
     color: white;
-    padding: 10px 20px;
-    text-decoration: none;
+    border: none;
+    padding: 5px 10px;
     border-radius: 4px;
-    margin-bottom: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
-.participant-list .button:hover {
-    background-color: #218838;
+.participant-list ul li button:hover {
+    background-color: #e57373;
 }
 
-.participant-list select, .participant-list input[type="text"] {
-    width: calc(33.333% - 10px);
-    display: inline-block;
-    margin-right: 10px;
+.participant-list .pagination button {
+    margin: 5px;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
-.participant-list select:last-child, .participant-list input[type="text"]:last-child {
-    margin-right: 0;
+.participant-list .pagination button:hover {
+    background-color: #66BB6A;
 }

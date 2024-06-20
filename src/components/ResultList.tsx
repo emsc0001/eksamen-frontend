@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { getAllResults, deleteResult } from '../services/ResultService';
+import { getAllResults } from '../services/ResultService';
 import '../styling/ResultList.css';
 
 const ResultList: React.FC = () => {
@@ -10,8 +9,6 @@ const ResultList: React.FC = () => {
     const resultsPerPage = 10;
     const [sortField, setSortField] = useState<string>('date');
     const [sortOrder, setSortOrder] = useState<string>('asc');
-    const [genderFilter, setGenderFilter] = useState<string>('');
-    const [ageGroupFilter, setAgeGroupFilter] = useState<string>('');
 
     useEffect(() => {
         const fetchData = async () => {
@@ -23,38 +20,26 @@ const ResultList: React.FC = () => {
     }, []);
 
     useEffect(() => {
-        let sortedResults = [...filteredResults];
+        let sortedResults = [...results];
         sortedResults.sort((a, b) => {
             if (a[sortField] < b[sortField]) return sortOrder === 'asc' ? -1 : 1;
             if (a[sortField] > b[sortField]) return sortOrder === 'asc' ? 1 : -1;
             return 0;
         });
         setFilteredResults(sortedResults);
-    }, [sortField, sortOrder, filteredResults]);
+    }, [results, sortField, sortOrder]);
 
-    const getAgeGroup = (age: number) => {
-        if (age >= 6 && age <= 9) return 'Children';
-        if (age >= 10 && age <= 13) return 'Youth';
-        if (age >= 14 && age <= 22) return 'Junior';
-        if (age >= 23 && age <= 40) return 'Adult';
-        if (age >= 41) return 'Senior';
-        return 'Unknown';
-    };
-
-    useEffect(() => {
-        let filtered = results;
-        if (genderFilter) {
-            filtered = filtered.filter(result => result.participant.gender === genderFilter);
+    const formatResultDisplay = (resultType: string, value: string) => {
+        switch (resultType) {
+            case 'time':
+                const [hours, minutes, seconds, hundredths] = value.split(/[:.]/);
+                return `${hours.padStart(2, '0')}:${minutes.padStart(2, '0')}:${seconds.padStart(2, '0')}.${hundredths.padStart(2, '0')}`;
+            case 'distance':
+                const [meters, centimeters] = value.split('.');
+                return `${meters}m ${centimeters}cm`;
+            default:
+                return value;
         }
-        if (ageGroupFilter) {
-            filtered = filtered.filter(result => getAgeGroup(result.participant.age) === ageGroupFilter);
-        }
-        setFilteredResults(filtered);
-    }, [genderFilter, ageGroupFilter, results]);
-
-    const handleDelete = async (id: string) => {
-        await deleteResult(id);
-        setResults(results.filter(result => result.id !== id));
     };
 
     const indexOfLastResult = currentPage * resultsPerPage;
@@ -76,29 +61,10 @@ const ResultList: React.FC = () => {
                     {sortOrder === 'asc' ? 'Ascending' : 'Descending'}
                 </button>
             </div>
-            <div>
-                <label>Filter by Gender:</label>
-                <select value={genderFilter} onChange={(e) => setGenderFilter(e.target.value)}>
-                    <option value="">All</option>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                </select>
-                <label>Filter by Age Group:</label>
-                <select value={ageGroupFilter} onChange={(e) => setAgeGroupFilter(e.target.value)}>
-                    <option value="">All</option>
-                    <option value="Children">Children (6-9)</option>
-                    <option value="Youth">Youth (10-13)</option>
-                    <option value="Junior">Junior (14-22)</option>
-                    <option value="Adult">Adult (23-40)</option>
-                    <option value="Senior">Senior (41+)</option>
-                </select>
-            </div>
             <ul>
                 {currentResults.map(result => (
                     <li key={result.id}>
-                        {result.date} - {result.resultValue} - {result.participant.name}
-                        <button onClick={() => handleDelete(result.id)}>Delete</button>
-                        <Link to={`/results/edit/${result.id}`}>Edit</Link>
+                        {result.date} - {formatResultDisplay(result.resultType, result.resultValue)}
                     </li>
                 ))}
             </ul>

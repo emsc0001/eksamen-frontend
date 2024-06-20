@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { createDiscipline, getDisciplineById, updateDiscipline } from '../services/DisciplineService';
-import '../styling/DisciplineForm.css'
+import '../styling/DisciplineForm.css';
 
 const DisciplineForm: React.FC = () => {
     const { id } = useParams<{ id: string }>();
@@ -42,7 +42,12 @@ const DisciplineForm: React.FC = () => {
                 </div>
                 <div>
                     <label>Result Type</label>
-                    <input type="text" value={resultType} onChange={(e) => setResultType(e.target.value)} />
+                    <select value={resultType} onChange={(e) => setResultType(e.target.value)}>
+                        <option value="">Select Result Type</option>
+                        <option value="time">Time</option>
+                        <option value="distance">Distance</option>
+                        <option value="points">Points</option>
+                    </select>
                 </div>
                 <button type="submit">{isEditing ? 'Update' : 'Create'}</button>
             </form>

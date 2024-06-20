@@ -17,11 +17,6 @@ export const createResult = async (result: any) => {
     return response.data;
 };
 
-export const createResults = async (results: any[]) => {
-    const response = await axios.post(`${API_URL}/batch`, results);
-    return response.data;
-};
-
 export const updateResult = async (id: string, result: any) => {
     const response = await axios.put(`${API_URL}/${id}`, result);
     return response.data;
@@ -32,7 +27,14 @@ export const deleteResult = async (id: string) => {
     return response.data;
 };
 
+// Add this function
 export const getResultsByDiscipline = async (disciplineId: string) => {
     const response = await axios.get(`${API_URL}/discipline/${disciplineId}`);
+    return response.data;
+};
+
+// Add this function
+export const createBatchResults = async (results: any[]) => {
+    const response = await axios.post(`${API_URL}/batch`, results);
     return response.data;
 };

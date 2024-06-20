@@ -24,8 +24,7 @@ const ResultForm: React.FC = () => {
                 setResult({
                     ...resultData,
                     disciplineId: resultData.discipline.id,
-                    participantId: resultData.participant.id,
-                    resultType: resultData.discipline.resultType // Assuming resultType is part of discipline
+                    participantId: resultData.participant.id
                 });
             }
         };
@@ -40,12 +39,11 @@ const ResultForm: React.FC = () => {
     const formatResultValue = (resultType: string, value: string) => {
         switch (resultType) {
             case 'time':
-                const [hours, minutes, seconds] = value.split(':');
-                return `${hours.padStart(2, '0')}:${minutes.padStart(2, '0')}:${seconds.padStart(2, '0')}`;
+                const [hours, minutes, seconds, hundredths] = value.split(':');
+                return `${hours.padStart(2, '0')}:${minutes.padStart(2, '0')}:${seconds.padStart(2, '0')}.${hundredths.padStart(2, '0')}`;
             case 'distance':
                 const [meters, centimeters] = value.split('.');
                 return `${meters}m ${centimeters}cm`;
-            case 'points':
             default:
                 return value;
         }
@@ -53,9 +51,10 @@ const ResultForm: React.FC = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        const formattedValue = formatResultValue(result.resultType, result.resultValue);
         const resultData = {
             ...result,
-            resultValue: formatResultValue(result.resultType, result.resultValue),
+            resultValue: formattedValue,
             discipline: { id: result.disciplineId },
             participant: { id: result.participantId }
         };
@@ -68,7 +67,7 @@ const ResultForm: React.FC = () => {
     };
 
     return (
-        <div className="result-form">
+        <div className="form-container">
             <h2>{id ? 'Edit Result' : 'Create Result'}</h2>
             <form onSubmit={handleSubmit}>
                 <div>
@@ -77,7 +76,7 @@ const ResultForm: React.FC = () => {
                 </div>
                 <div>
                     <label>Result Value:</label>
-                    <input type="text" name="resultValue" value={result.resultValue} onChange={handleChange} required />
+                    <input type="text" name="resultValue" value={result.resultValue} onChange={handleChange} required placeholder={result.resultType === 'time' ? 'HH:MM:SS.SS' : 'Meters.Centimeters'} />
                 </div>
                 <div>
                     <label>Discipline:</label>

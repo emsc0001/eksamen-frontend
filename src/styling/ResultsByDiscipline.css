@@ -1,49 +1,63 @@
 .results-by-discipline {
-    background-color: white;
+    max-width: 1200px;
+    margin: 0 auto;
     padding: 20px;
+    background: white;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .results-by-discipline h2 {
-    margin-top: 0;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.results-by-discipline div {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.results-by-discipline label {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.results-by-discipline select,
+.results-by-discipline input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
 }
 
 .results-by-discipline ul {
-    list-style-type: none;
+    list-style: none;
     padding: 0;
 }
 
 .results-by-discipline ul li {
-    background-color: #f1f1f1;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 4px;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
 }
 
-.results-by-discipline ul li a {
-    color: #007bff;
-    text-decoration: none;
-    margin-left: 10px;
+.results-by-discipline ul li:last-child {
+    border-bottom: none;
 }
 
-.results-by-discipline ul li a:hover {
-    text-decoration: underline;
-}
-
-.results-by-discipline .button {
-    display: inline-block;
-    background-color: #28a745;
-    color: white;
-    padding: 10px 20px;
-    text-decoration: none;
+.results-by-discipline .pagination button {
+    margin: 5px;
+    padding: 10px;
+    border: none;
     border-radius: 4px;
-    margin-bottom: 20px;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
-.results-by-discipline .button:hover {
-    background-color: #218838;
+.results-by-discipline .pagination button:hover {
+    background-color: #66BB6A;
 }

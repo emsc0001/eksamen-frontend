@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getParticipantById, deleteParticipant } from '../services/ParticipantService';
+import '../styling/ParticipantDetail.css';
 
 const ParticipantDetail: React.FC = () => {
     const { id } = useParams<{ id: string }>();
@@ -16,8 +17,10 @@ const ParticipantDetail: React.FC = () => {
     }, [id]);
 
     const handleDelete = async () => {
-        await deleteParticipant(Number(id));
-        navigate('/');
+        if (window.confirm('Are you sure you want to delete this participant?')) {
+            await deleteParticipant(Number(id));
+            navigate('/');
+        }
     };
 
     if (!participant) {
@@ -25,12 +28,18 @@ const ParticipantDetail: React.FC = () => {
     }
 
     return (
-        <div>
+        <div className="participant-detail">
             <h2>Participant Detail</h2>
-            <p>Name: {participant.name}</p>
-            <p>Gender: {participant.gender}</p>
-            <p>Age: {participant.age}</p>
-            <p>Club: {participant.club}</p>
+            <p><strong>Name:</strong> {participant.name}</p>
+            <p><strong>Gender:</strong> {participant.gender}</p>
+            <p><strong>Age:</strong> {participant.age}</p>
+            <p><strong>Club:</strong> {participant.club}</p>
+            <h3>Disciplines</h3>
+            <ul>
+                {participant.disciplines.map((discipline: any) => (
+                    <li key={discipline.id}>{discipline.name} ({discipline.resultType})</li>
+                ))}
+            </ul>
             <button onClick={() => navigate(`/participants/edit/${id}`)}>Edit</button>
             <button onClick={handleDelete}>Delete</button>
         </div>

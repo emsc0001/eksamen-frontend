@@ -1,38 +1,69 @@
-.batch-result-form {
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+.result-form {
+    max-width: 600px;
+    margin: 0 auto;
 }
 
-.batch-result-form h2 {
-    margin-top: 0;
+.result-form h2 {
+    text-align: center;
+    margin-bottom: 20px;
 }
 
-.batch-result-form form {
+.result-form .result-entry {
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
 }
 
-.batch-result-form form div {
-    margin-bottom: 15px;
+.result-form .result-entry div {
+    flex: 1;
+    margin-right: 10px;
 }
 
-.batch-result-form form label {
-    font-weight: bold;
+.result-form .result-entry button {
+    flex: none;
+    padding: 10px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
-.batch-result-form form input[type="text"], 
-.batch-result-form form input[type="date"], 
-.batch-result-form form select {
+.result-form .result-entry button:hover {
+    background-color: #e57373;
+}
+
+.result-form button[type="submit"] {
+    display: block;
     width: 100%;
     padding: 10px;
-    margin-top: 5px;
-    border: 1px solid #ccc;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
     border-radius: 4px;
-    box-sizing: border-box;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
-.batch-result-form form button {
-    align-self: flex-end;
+.result-form button[type="submit"]:hover {
+    background-color: #66BB6A;
+}
+
+.result-form button[type="button"] {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.result-form button[type="button"]:hover {
+    background-color: #64B5F6;
 }
