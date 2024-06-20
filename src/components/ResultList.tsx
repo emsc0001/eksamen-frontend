@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getAllResults } from '../services/ResultService';
+import { getAllResults, deleteResult } from '../services/ResultService';
 import '../styling/ResultList.css';
 
 const ResultList: React.FC = () => {
@@ -29,6 +29,15 @@ const ResultList: React.FC = () => {
         setFilteredResults(sortedResults);
     }, [results, sortField, sortOrder]);
 
+    const handleDelete = async (id: string) => {
+        try {
+            await deleteResult(id);
+            setResults(results.filter(result => result.id !== id));
+        } catch (error) {
+            console.error('Error deleting result:', error);
+        }
+    };
+
     const formatResultDisplay = (resultType: string, value: string) => {
         switch (resultType) {
             case 'time':
@@ -51,20 +60,39 @@ const ResultList: React.FC = () => {
     return (
         <div className="result-list">
             <h2>Results</h2>
-            <div>
-                <label>Sort by:</label>
-                <select value={sortField} onChange={(e) => setSortField(e.target.value)}>
-                    <option value="date">Date</option>
-                    <option value="resultValue">Result Value</option>
-                </select>
-                <button onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}>
-                    {sortOrder === 'asc' ? 'Ascending' : 'Descending'}
-                </button>
+            <div className="filters">
+                <div>
+                    <label>Sort by:</label>
+                    <select value={sortField} onChange={(e) => setSortField(e.target.value)}>
+                        <option value="date">Date</option>
+                        <option value="resultValue">Result Value</option>
+                    </select>
+                </div>
+                <div>
+                    <button onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}>
+                        {sortOrder === 'asc' ? 'Ascending' : 'Descending'}
+                    </button>
+                </div>
+            </div>
+            <div className="header">
+                <div className="participant">Participant</div>
+                <div>Value</div>
+                <div>Discipline</div>
+                <div>Date</div>
+                <div>Actions</div>
             </div>
             <ul>
                 {currentResults.map(result => (
-                    <li key={result.id}>
-                        {result.date} - {formatResultDisplay(result.resultType, result.resultValue)}
+                    <li key={result.id} className="result-item">
+                        <div className="result-info">
+                            <div className="participant">{result.participant.name}</div>
+                            <div>{formatResultDisplay(result.resultType, result.resultValue)}</div>
+                            <div>{result.discipline.name}</div>
+                            <div>{result.date}</div>
+                            <div>
+                                <button onClick={() => handleDelete(result.id)}>Delete</button>
+                            </div>
+                        </div>
                     </li>
                 ))}
             </ul>

@@ -15,7 +15,7 @@ const DisciplineForm: React.FC = () => {
             const fetchData = async () => {
                 const result = await getDisciplineById(Number(id));
                 setName(result.name);
-                setResultType(result.resultType);
+                setResultType(result.resultType.toUpperCase()); // Ensure it matches the enum
             };
             fetchData();
         }
@@ -23,7 +23,7 @@ const DisciplineForm: React.FC = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        const discipline = { name, resultType };
+        const discipline = { name, resultType: resultType.toUpperCase() }; // Ensure it matches the enum
         if (isEditing) {
             await updateDiscipline(Number(id), discipline);
         } else {
@@ -44,9 +44,9 @@ const DisciplineForm: React.FC = () => {
                     <label>Result Type</label>
                     <select value={resultType} onChange={(e) => setResultType(e.target.value)} required>
                         <option value="">Select Result Type</option>
-                        <option value="time">Time</option>
-                        <option value="distance">Distance</option>
-                        <option value="points">Points</option>
+                        <option value="TIME">Time</option>
+                        <option value="DISTANCE">Distance</option>
+                        <option value="POINTS">Points</option>
                     </select>
                 </div>
                 <button type="submit">{isEditing ? 'Update' : 'Create'}</button>

@@ -1,9 +1,10 @@
+/* theme.css */
 body {
-    font-family: 'Helvetica Neue', Arial, sans-serif;
-    background-color: #f9f9f9;
-    color: #333;
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
     margin: 0;
     padding: 0;
+    color: #333;
 }
 
 .container {
@@ -12,241 +13,99 @@ body {
     padding: 20px;
 }
 
-button {
-    cursor: pointer;
-}
-
-button:focus,
-input:focus,
-select:focus {
-    outline: none;
-}
-
-header {
-    background-color: #4CAF50;
+.header {
+    background-color: #008080;
     color: white;
     padding: 20px 0;
     text-align: center;
-    border-bottom: 4px solid #388E3C;
+    margin-bottom: 20px;
 }
 
-header h1 {
+.header h1 {
     margin: 0;
-    font-size: 2.5em;
 }
 
-header nav ul {
+nav ul {
     list-style: none;
     padding: 0;
-    margin: 10px 0 0;
-    display: flex;
-    justify-content: center;
-    gap: 20px;
 }
 
-header nav ul li {
+nav ul li {
     display: inline;
+    margin-right: 15px;
 }
 
-header nav ul li a {
+nav ul li a {
     color: white;
     text-decoration: none;
     font-weight: bold;
-    padding: 5px 10px;
-    border-radius: 4px;
-    transition: background-color 0.3s;
 }
 
-header nav ul li a:hover {
-    background-color: #66BB6A;
+nav ul li a:hover {
+    text-decoration: underline;
 }
 
-.auth-status {
-    text-align: right;
-    padding: 10px 20px;
-}
-
-.auth-status form {
-    display: inline-block;
-}
-
-.auth-status input {
-    margin: 0 5px;
-    padding: 5px;
-}
-
-.auth-status button {
-    background-color: #388E3C;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.auth-status button:hover {
-    background-color: #66BB6A;
-}
-
-.error {
-    color: red;
-    font-weight: bold;
-}
-
-/* Common Form Styles */
-form {
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin-top: 20px;
-}
-
-form div {
-    margin-bottom: 15px;
-}
-
-form label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 5px;
-}
-
-form input,
-form select,
-form button {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-}
-
-form button {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-form button:hover {
-    background-color: #66BB6A;
-}
-
-/* Participant List */
-.participant-list {
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin-top: 20px;
-}
-
-.participant-list ul {
-    list-style: none;
-    padding: 0;
-}
-
-.participant-list ul li {
-    padding: 10px 0;
-    border-bottom: 1px solid #eee;
-}
-
-.participant-list ul li:last-child {
-    border-bottom: none;
-}
-
-.participant-list ul li button {
-    margin-left: 10px;
-}
-
-/* Discipline List */
+.form-container,
+.result-list,
+.participant-list,
 .discipline-list {
     background: white;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
-.discipline-list ul {
-    list-style: none;
-    padding: 0;
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
 }
 
-.discipline-list ul li {
-    padding: 10px 0;
-    border-bottom: 1px solid #eee;
-}
-
-.discipline-list ul li:last-child {
-    border-bottom: none;
-}
-
-/* Result List */
-.result-list {
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin-top: 20px;
-}
-
-.result-list ul {
-    list-style: none;
-    padding: 0;
-}
-
-.result-list ul li {
-    padding: 10px 0;
-    border-bottom: 1px solid #eee;
-}
-
-.result-list ul li:last-child {
-    border-bottom: none;
-}
-
-.result-list .pagination button {
-    margin: 5px;
-    padding: 10px;
-    border: none;
-    border-radius: 4px;
-    background-color: #4CAF50;
+button {
+    background-color: #008080;
     color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s;
+    font-size: 16px;
 }
 
-.result-list .pagination button:hover {
-    background-color: #66BB6A;
+button:hover {
+    background-color: #007070;
 }
 
-/* Batch Result Form */
-.result-form {
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin-top: 20px;
+input[type="text"],
+input[type="date"],
+select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+    font-size: 16px;
 }
 
-.result-form .result-entry {
-    margin-bottom: 15px;
+.result-item {
     display: flex;
-    gap: 10px;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
 }
 
-.result-form .result-entry div {
+.result-item:last-child {
+    border-bottom: none;
+}
+
+.result-item .result-info {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.result-item .result-info div {
     flex: 1;
-}
-
-.result-form .result-entry button {
-    width: auto;
-    background-color: #f44336;
-}
-
-.result-form .result-entry button:hover {
-    background-color: #e57373;
+    text-align: center;
 }

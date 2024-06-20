@@ -7,15 +7,15 @@ export const getAllDisciplines = async () => {
     return response.data;
 };
 
-export const createDiscipline = async (discipline: any) => {
+export const createDiscipline = async (discipline: { name: string; resultType: string }) => {
     return axios.post(API_URL, discipline);
 };
 
-export const updateDiscipline = async (id: string, discipline: any) => {
+export const updateDiscipline = async (id: number, discipline: { name: string; resultType: string }) => {
     return axios.put(`${API_URL}/${id}`, discipline);
 };
 
-export const getDisciplineById = async (id: string) => {
+export const getDisciplineById = async (id: number) => {
     const response = await axios.get(`${API_URL}/${id}`);
     return response.data;
 };

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { getAllParticipants, searchParticipants, deleteParticipant, filterParticipants } from '../services/ParticipantService';
 import { getAllDisciplines } from '../services/DisciplineService';
 import '../styling/ParticipantList.css';
@@ -15,6 +15,7 @@ const ParticipantList: React.FC = () => {
     const [disciplineFilter, setDisciplineFilter] = useState<string>('');
     const [searchTerm, setSearchTerm] = useState<string>('');
     const [disciplines, setDisciplines] = useState<any[]>([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -28,25 +29,35 @@ const ParticipantList: React.FC = () => {
     }, []);
 
     useEffect(() => {
-        const fetchSearchResults = async () => {
-            if (searchTerm) {
-                const result = await searchParticipants(searchTerm);
-                setFilteredParticipants(result);
-            } else {
-                setFilteredParticipants(participants);
-            }
-        };
-        fetchSearchResults();
-    }, [searchTerm]);
+        applyFilters();
+    }, [genderFilter, ageGroupFilter, clubFilter, disciplineFilter, searchTerm]);
 
-    useEffect(() => {
-        const fetchFilteredResults = async () => {
-            const result = await filterParticipants(genderFilter, ageGroupFilter, clubFilter, disciplineFilter ? parseInt(disciplineFilter) : null);
-            setFilteredParticipants(result);
-        };
+    const applyFilters = async () => {
+        let filtered = participants;
 
-        fetchFilteredResults();
-    }, [genderFilter, ageGroupFilter, clubFilter, disciplineFilter]);
+        if (genderFilter) {
+            filtered = filtered.filter(participant => participant.gender === genderFilter);
+        }
+
+        if (ageGroupFilter) {
+            filtered = filtered.filter(participant => getAgeGroup(participant.age) === ageGroupFilter);
+        }
+
+        if (clubFilter) {
+            filtered = filtered.filter(participant => participant.club.toLowerCase().includes(clubFilter.toLowerCase()));
+        }
+
+        if (disciplineFilter) {
+            const disciplineId = parseInt(disciplineFilter, 10);
+            filtered = filtered.filter(participant => participant.disciplines.some(discipline => discipline.id === disciplineId));
+        }
+
+        if (searchTerm) {
+            filtered = filtered.filter(participant => participant.name.toLowerCase().includes(searchTerm.toLowerCase()));
+        }
+
+        setFilteredParticipants(filtered);
+    };
 
     const getAgeGroup = (age: number) => {
         if (age >= 6 && age <= 9) return 'Children';
@@ -69,6 +80,10 @@ const ParticipantList: React.FC = () => {
         }
     };
 
+    const handleViewDetails = (id: number) => {
+        navigate(`/participants/${id}`);
+    };
+
     const indexOfLastParticipant = currentPage * participantsPerPage;
     const indexOfFirstParticipant = indexOfLastParticipant - participantsPerPage;
     const currentParticipants = filteredParticipants.slice(indexOfFirstParticipant, indexOfLastParticipant);
@@ -79,42 +94,59 @@ const ParticipantList: React.FC = () => {
         <div className="participant-list">
             <h2>Participants</h2>
             <Link to="/participants/new" className="button">Create New Participant</Link>
-            <div>
-                <label>Filter by Gender:</label>
-                <select value={genderFilter} onChange={(e) => setGenderFilter(e.target.value)}>
-                    <option value="">All</option>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                </select>
-                <label>Filter by Age Group:</label>
-                <select value={ageGroupFilter} onChange={(e) => setAgeGroupFilter(e.target.value)}>
-                    <option value="">All</option>
-                    <option value="Children">Children (6-9)</option>
-                    <option value="Youth">Youth (10-13)</option>
-                    <option value="Junior">Junior (14-22)</option>
-                    <option value="Adult">Adult (23-40)</option>
-                    <option value="Senior">Senior (41+)</option>
-                </select>
-                <label>Filter by Club:</label>
-                <input type="text" value={clubFilter} onChange={(e) => setClubFilter(e.target.value)} />
-                <label>Filter by Discipline:</label>
-                <select value={disciplineFilter} onChange={(e) => setDisciplineFilter(e.target.value)}>
-                    <option value="">All</option>
-                    {disciplines.map(discipline => (
-                        <option key={discipline.id} value={discipline.id}>{discipline.name}</option>
-                    ))}
-                </select>
-                <label>Search by Name:</label>
-                <input type="text" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
+            <div className="filters">
+                <div>
+                    <label>Filter by Gender:</label>
+                    <select value={genderFilter} onChange={(e) => setGenderFilter(e.target.value)}>
+                        <option value="">All</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Filter by Age Group:</label>
+                    <select value={ageGroupFilter} onChange={(e) => setAgeGroupFilter(e.target.value)}>
+                        <option value="">All</option>
+                        <option value="Children">Children (6-9)</option>
+                        <option value="Youth">Youth (10-13)</option>
+                        <option value="Junior">Junior (14-22)</option>
+                        <option value="Adult">Adult (23-40)</option>
+                        <option value="Senior">Senior (41+)</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Filter by Club:</label>
+                    <input type="text" value={clubFilter} onChange={(e) => setClubFilter(e.target.value)} />
+                </div>
+                <div>
+                    <label>Filter by Discipline:</label>
+                    <select value={disciplineFilter} onChange={(e) => setDisciplineFilter(e.target.value)}>
+                        <option value="">All</option>
+                        {disciplines.map(discipline => (
+                            <option key={discipline.id} value={discipline.id}>{discipline.name}</option>
+                        ))}
+                    </select>
+                </div>
+                <div>
+                    <label>Search by Name:</label>
+                    <input type="text" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
+                </div>
             </div>
             <ul>
                 {currentParticipants.map(participant => (
-                    <li key={participant.id}>
-                        <Link to={`/participants/${participant.id}`}>
-                            {participant.name} - {participant.gender} - {participant.age} - {getAgeGroup(participant.age)} - {participant.club}
-                        </Link>
-                        <Link to={`/participants/edit/${participant.id}`}>Edit</Link>
-                        <button onClick={() => handleDelete(participant.id)}>Delete</button>
+                    <li key={participant.id} className="participant-item">
+                        <div className="participant-info">
+                            <strong>Name:</strong> <span>{participant.name}</span> <br />
+                            <strong>Gender:</strong> <span>{participant.gender}</span> <br />
+                            <strong>Age:</strong> <span>{participant.age}</span> <br />
+                            <strong>Age Group:</strong> <span>{getAgeGroup(participant.age)}</span> <br />
+                            <strong>Club:</strong> <span>{participant.club}</span>
+                        </div>
+                        <div className="participant-actions">
+                            <button onClick={() => handleViewDetails(participant.id)} className="view-button">View</button>
+                            <Link to={`/participants/edit/${participant.id}`} className="edit-button">Edit</Link>
+                            <button onClick={() => handleDelete(participant.id)} className="delete-button">Delete</button>
+                        </div>
                     </li>
                 ))}
             </ul>

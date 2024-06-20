@@ -3,14 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import { createBatchResults } from '../services/ResultService';
 import { getAllDisciplines } from '../services/DisciplineService';
 import { getAllParticipants } from '../services/ParticipantService';
-import '../styling/ResultForm.css';
+import '../index.css'; // Ensure the new CSS file is imported
 
 const BatchResultForm: React.FC = () => {
     const navigate = useNavigate();
-    const [results, setResults] = useState([{ participantId: '', resultValue: '' }]);
-    const [disciplines, setDisciplines] = useState<any[]>([]);
-    const [participants, setParticipants] = useState<any[]>([]);
-    const [disciplineId, setDisciplineId] = useState<string>('');
+    const [results, setResults] = useState([{ participantId: '', resultValue: '', resultType: '' }]);
+    const [disciplines, setDisciplines] = useState([]);
+    const [participants, setParticipants] = useState([]);
+    const [disciplineId, setDisciplineId] = useState('');
 
     useEffect(() => {
         const fetchData = async () => {
@@ -31,7 +31,7 @@ const BatchResultForm: React.FC = () => {
     };
 
     const handleAddResult = () => {
-        setResults([...results, { participantId: '', resultValue: '' }]);
+        setResults([...results, { participantId: '', resultValue: '', resultType: '' }]);
     };
 
     const handleRemoveResult = (index: number) => {
@@ -44,8 +44,12 @@ const BatchResultForm: React.FC = () => {
             ...result,
             discipline: { id: disciplineId },
         }));
-        await createBatchResults(resultData);
-        navigate('/results');
+        try {
+            await createBatchResults(resultData);
+            navigate('/results');
+        } catch (error) {
+            console.error('Error creating batch results:', error);
+        }
     };
 
     return (
@@ -96,15 +100,29 @@ const BatchResultForm: React.FC = () => {
                                 required
                             />
                         </div>
-                        <button type="button" onClick={() => handleRemoveResult(index)}>
+                        <div>
+                            <label>Result Type:</label>
+                            <select
+                                name="resultType"
+                                value={result.resultType}
+                                onChange={(e) => handleChange(index, e)}
+                                required
+                            >
+                                <option value="">Select Result Type</option>
+                                <option value="TIME">Time</option>
+                                <option value="DISTANCE">Distance</option>
+                                <option value="POINTS">Points</option>
+                            </select>
+                        </div>
+                        <button type="button" className="remove-button" onClick={() => handleRemoveResult(index)}>
                             Remove
                         </button>
                     </div>
                 ))}
-                <button type="button" onClick={handleAddResult}>
+                <button type="button" className="add-button" onClick={handleAddResult}>
                     Add Another Result
                 </button>
-                <button type="submit">Submit</button>
+                <button type="submit" className="submit-button">Submit</button>
             </form>
         </div>
     );

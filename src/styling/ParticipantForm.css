@@ -1,52 +1,55 @@
-.participant-form {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
+.form-container {
     background: white;
+    padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.participant-form h2 {
-    text-align: center;
     margin-bottom: 20px;
 }
 
-.participant-form .error {
-    color: red;
-    font-weight: bold;
+h2 {
     text-align: center;
     margin-bottom: 20px;
+    font-size: 24px;
 }
 
-.participant-form div {
-    margin-bottom: 15px;
+button {
+    background-color: #008080;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 16px;
 }
 
-.participant-form label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 5px;
+button:hover {
+    background-color: #007070;
 }
 
-.participant-form input,
-.participant-form select,
-.participant-form button {
+input[type="text"],
+input[type="date"],
+select {
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
+    margin-bottom: 20px;
+    font-size: 16px;
 }
 
-.participant-form button {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s;
+.result-entry {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
 }
 
-.participant-form button:hover {
-    background-color: #66BB6A;
+.result-entry div {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.result-entry div:last-child {
+    margin-right: 0;
 }

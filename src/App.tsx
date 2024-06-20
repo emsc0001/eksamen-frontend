@@ -1,3 +1,4 @@
+// App.tsx
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import ParticipantList from './components/ParticipantList';
@@ -9,7 +10,7 @@ import ResultList from './components/ResultList';
 import ResultForm from './components/ResultForm';
 import ResultsByDiscipline from './components/ResultsByDiscipline';
 import BatchResultForm from './components/BatchResultForm';
-import './index.css';
+import './index.css'; // Import the new CSS file
 
 const App: React.FC = () => {
     return (

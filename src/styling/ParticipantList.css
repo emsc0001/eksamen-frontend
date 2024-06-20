@@ -1,4 +1,4 @@
-/* participant-list.css */
+/* ParticipantList.css */
 .participant-list {
     max-width: 1200px;
     margin: 0 auto;
@@ -11,40 +11,52 @@
 .participant-list h2 {
     text-align: center;
     margin-bottom: 20px;
+    font-size: 24px;
 }
 
-.participant-list a.button {
+.participant-list .button {
     display: inline-block;
     margin-bottom: 20px;
     padding: 10px 20px;
-    background-color: #4CAF50;
+    background-color: #008080;
     color: white;
     text-decoration: none;
     border-radius: 4px;
     transition: background-color 0.3s;
+    text-align: center;
+    font-size: 16px;
 }
 
-.participant-list a.button:hover {
-    background-color: #66BB6A;
+.participant-list .button:hover {
+    background-color: #007070;
 }
 
-.participant-list div {
+.participant-list .filters {
     display: flex;
-    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
     margin-bottom: 20px;
+    align-items: flex-start;
 }
 
-.participant-list label {
+.participant-list .filters > div {
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+}
+
+.participant-list .filters label {
+    margin-bottom: 5px;
     font-weight: bold;
-    margin-right: 10px;
 }
 
-.participant-list select,
-.participant-list input {
+.participant-list .filters select,
+.participant-list .filters input {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
+    width: 100%;
 }
 
 .participant-list ul {
@@ -52,54 +64,94 @@
     padding: 0;
 }
 
-.participant-list ul li {
+.participant-list ul li.participant-item {
     display: flex;
     justify-content: space-between;
-    padding: 10px 0;
-    border-bottom: 1px solid #eee;
-}
-
-.participant-list ul li:last-child {
-    border-bottom: none;
-}
-
-.participant-list ul li a {
-    color: #4CAF50;
-    text-decoration: none;
-    font-weight: bold;
-    margin-left: 10px;
-    transition: color 0.3s;
-}
-
-.participant-list ul li a:hover {
-    color: #388E3C;
-}
-
-.participant-list ul li button {
-    background-color: #f44336;
-    color: white;
-    border: none;
-    padding: 5px 10px;
+    align-items: center;
+    padding: 10px 20px;
+    margin-bottom: 10px;
+    background-color: #f9f9f9;
     border-radius: 4px;
-    cursor: pointer;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
     transition: background-color 0.3s;
 }
 
-.participant-list ul li button:hover {
-    background-color: #e57373;
+.participant-list ul li:hover {
+    background-color: #f1f1f1;
 }
 
-.participant-list .pagination button {
+.participant-list ul li .participant-info {
+    flex-grow: 1;
+}
+
+.participant-list ul li .participant-info strong {
+    font-weight: bold;
+    color: #333;
+    font-size: 16px;
+}
+
+.participant-list ul li .participant-info span {
+    font-weight: normal;
+    color: #666;
+    font-size: 14px;
+}
+
+.participant-list ul li .participant-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.participant-list ul li .participant-actions a,
+.participant-list ul li .participant-actions button {
+    background-color: #008080;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-decoration: none;
+    text-align: center;
+    font-size: 14px;
+}
+
+.participant-list ul li .participant-actions a:hover,
+.participant-list ul li .participant-actions button:hover {
+    background-color: #007070;
+}
+
+.participant-list ul li .participant-actions .view-button {
+    background-color: #17a2b8;
+}
+
+.participant-list ul li .participant-actions .view-button:hover {
+    background-color: #138496;
+}
+
+.participant-list ul li .participant-actions .delete-button {
+    background-color: #dc3545;
+}
+
+.participant-list ul li .participant-actions .delete-button:hover {
+    background-color: #c82333;
+}
+
+.pagination {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.pagination button {
     margin: 5px;
     padding: 10px;
     border: none;
     border-radius: 4px;
-    background-color: #4CAF50;
+    background-color: #008080;
     color: white;
     cursor: pointer;
     transition: background-color 0.3s;
 }
 
-.participant-list .pagination button:hover {
-    background-color: #66BB6A;
+.pagination button:hover {
+    background-color: #007070;
 }
