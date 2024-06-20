@@ -31,3 +31,10 @@ export const searchParticipants = async (query: string) => {
     const response = await axios.get(`${API_URL}/search?query=${query}`);
     return response.data;
 };
+
+export const filterParticipants = async (gender: string, ageGroup: string, club: string, disciplineId: number | null) => {
+    const response = await axios.get(`${API_URL}/filter`, {
+        params: { gender, ageGroup, club, disciplineId }
+    });
+    return response.data;
+};

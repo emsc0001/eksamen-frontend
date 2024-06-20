@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { getAllParticipants, searchParticipants, deleteParticipant } from '../services/ParticipantService';
+import { getAllParticipants, searchParticipants, deleteParticipant, filterParticipants } from '../services/ParticipantService';
+import { getAllDisciplines } from '../services/DisciplineService';
 import '../styling/ParticipantList.css';
 
 const ParticipantList: React.FC = () => {
@@ -11,13 +12,17 @@ const ParticipantList: React.FC = () => {
     const [genderFilter, setGenderFilter] = useState<string>('');
     const [ageGroupFilter, setAgeGroupFilter] = useState<string>('');
     const [clubFilter, setClubFilter] = useState<string>('');
+    const [disciplineFilter, setDisciplineFilter] = useState<string>('');
     const [searchTerm, setSearchTerm] = useState<string>('');
+    const [disciplines, setDisciplines] = useState<any[]>([]);
 
     useEffect(() => {
         const fetchData = async () => {
-            const result = await getAllParticipants();
-            setParticipants(result);
-            setFilteredParticipants(result);
+            const participantsData = await getAllParticipants();
+            setParticipants(participantsData);
+            setFilteredParticipants(participantsData);
+            const disciplinesData = await getAllDisciplines();
+            setDisciplines(disciplinesData);
         };
         fetchData();
     }, []);
@@ -35,18 +40,13 @@ const ParticipantList: React.FC = () => {
     }, [searchTerm]);
 
     useEffect(() => {
-        let filtered = participants;
-        if (genderFilter) {
-            filtered = filtered.filter(participant => participant.gender === genderFilter);
-        }
-        if (ageGroupFilter) {
-            filtered = filtered.filter(participant => getAgeGroup(participant.age) === ageGroupFilter);
-        }
-        if (clubFilter) {
-            filtered = filtered.filter(participant => participant.club === clubFilter);
-        }
-        setFilteredParticipants(filtered);
-    }, [genderFilter, ageGroupFilter, clubFilter, participants]);
+        const fetchFilteredResults = async () => {
+            const result = await filterParticipants(genderFilter, ageGroupFilter, clubFilter, disciplineFilter ? parseInt(disciplineFilter) : null);
+            setFilteredParticipants(result);
+        };
+
+        fetchFilteredResults();
+    }, [genderFilter, ageGroupFilter, clubFilter, disciplineFilter]);
 
     const getAgeGroup = (age: number) => {
         if (age >= 6 && age <= 9) return 'Children';
@@ -97,6 +97,13 @@ const ParticipantList: React.FC = () => {
                 </select>
                 <label>Filter by Club:</label>
                 <input type="text" value={clubFilter} onChange={(e) => setClubFilter(e.target.value)} />
+                <label>Filter by Discipline:</label>
+                <select value={disciplineFilter} onChange={(e) => setDisciplineFilter(e.target.value)}>
+                    <option value="">All</option>
+                    {disciplines.map(discipline => (
+                        <option key={discipline.id} value={discipline.id}>{discipline.name}</option>
+                    ))}
+                </select>
                 <label>Search by Name:</label>
                 <input type="text" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
             </div>
