@@ -7,16 +7,24 @@ import DisciplineList from './components/DisciplineList';
 import DisciplineForm from './components/DisciplineForm';
 import ResultList from './components/ResultList';
 import ResultForm from './components/ResultForm';
+import ResultsByDiscipline from './components/ResultsByDiscipline';
+import './index.css';
 
 const App: React.FC = () => {
     return (
         <Router>
-            <div className="App">
-                <nav>
-                    <Link to="/">Participants</Link>
-                    <Link to="/disciplines">Disciplines</Link>
-                    <Link to="/results">Results</Link>
-                </nav>
+            <div className="container">
+                <header>
+                    <h1>Athletic Event Management</h1>
+                    <nav>
+                        <ul>
+                            <li><Link to="/">Participants</Link></li>
+                            <li><Link to="/disciplines">Disciplines</Link></li>
+                            <li><Link to="/results">Results</Link></li>
+                            <li><Link to="/results/new">Create Result</Link></li>
+                        </ul>
+                    </nav>
+                </header>
                 <Routes>
                     <Route path="/" element={<ParticipantList />} />
                     <Route path="/participants/new" element={<ParticipantForm />} />
@@ -28,6 +36,7 @@ const App: React.FC = () => {
                     <Route path="/results" element={<ResultList />} />
                     <Route path="/results/new" element={<ResultForm />} />
                     <Route path="/results/edit/:id" element={<ResultForm />} />
+                    <Route path="/results/discipline/:disciplineId" element={<ResultsByDiscipline />} />
                 </Routes>
             </div>
         </Router>

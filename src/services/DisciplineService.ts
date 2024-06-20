@@ -8,20 +8,18 @@ export const getAllDisciplines = async () => {
 };
 
 export const createDiscipline = async (discipline: any) => {
-    const response = await axios.post(API_URL, discipline);
-    return response.data;
+    return axios.post(API_URL, discipline);
 };
 
-export const getDisciplineById = async (id: number) => {
+export const updateDiscipline = async (id: string, discipline: any) => {
+    return axios.put(`${API_URL}/${id}`, discipline);
+};
+
+export const getDisciplineById = async (id: string) => {
     const response = await axios.get(`${API_URL}/${id}`);
     return response.data;
 };
 
-export const updateDiscipline = async (id: number, discipline: any) => {
-    const response = await axios.put(`${API_URL}/${id}`, discipline);
-    return response.data;
-};
-
-export const deleteDiscipline = async (id: number) => {
-    await axios.delete(`${API_URL}/${id}`);
+export const deleteDiscipline = async (id: string) => {
+    return axios.delete(`${API_URL}/${id}`);
 };

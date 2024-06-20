@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { getAllParticipants } from '../services/ParticipantService';
+import { getAllParticipants, searchParticipants } from '../services/ParticipantService';
 import '../styling/ParticipantList.css';
 
 const ParticipantList: React.FC = () => {
     const [participants, setParticipants] = useState<any[]>([]);
     const [filteredParticipants, setFilteredParticipants] = useState<any[]>([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const participantsPerPage = 10;
     const [genderFilter, setGenderFilter] = useState<string>('');
     const [ageGroupFilter, setAgeGroupFilter] = useState<string>('');
     const [clubFilter, setClubFilter] = useState<string>('');
+    const [searchTerm, setSearchTerm] = useState<string>('');
 
     useEffect(() => {
         const fetchData = async () => {
@@ -18,6 +21,18 @@ const ParticipantList: React.FC = () => {
         };
         fetchData();
     }, []);
+
+    useEffect(() => {
+        const fetchSearchResults = async () => {
+            if (searchTerm) {
+                const result = await searchParticipants(searchTerm);
+                setFilteredParticipants(result);
+            } else {
+                setFilteredParticipants(participants);
+            }
+        };
+        fetchSearchResults();
+    }, [searchTerm]);
 
     useEffect(() => {
         let filtered = participants;
@@ -39,13 +54,19 @@ const ParticipantList: React.FC = () => {
         if (age >= 14 && age <= 22) return 'Junior';
         if (age >= 23 && age <= 40) return 'Adult';
         if (age >= 41) return 'Senior';
-        return '';
+        return 'Unknown';
     };
+
+    const indexOfLastParticipant = currentPage * participantsPerPage;
+    const indexOfFirstParticipant = indexOfLastParticipant - participantsPerPage;
+    const currentParticipants = filteredParticipants.slice(indexOfFirstParticipant, indexOfLastParticipant);
+
+    const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
     return (
         <div className="participant-list">
             <h2>Participants</h2>
-            <Link to="/participants/new">Create New Participant</Link>
+            <Link to="/participants/new" className="button">Create New Participant</Link>
             <div>
                 <label>Filter by Gender:</label>
                 <select value={genderFilter} onChange={(e) => setGenderFilter(e.target.value)}>
@@ -64,15 +85,24 @@ const ParticipantList: React.FC = () => {
                 </select>
                 <label>Filter by Club:</label>
                 <input type="text" value={clubFilter} onChange={(e) => setClubFilter(e.target.value)} />
+                <label>Search by Name:</label>
+                <input type="text" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
             </div>
             <ul>
-                {filteredParticipants.map(participant => (
+                {currentParticipants.map(participant => (
                     <li key={participant.id}>
-                        {participant.name} - {participant.gender} - {participant.age} - {participant.club} - 
+                        {participant.name} - {participant.gender} - {participant.age} - {getAgeGroup(participant.age)} - {participant.club} - 
                         <Link to={`/participants/edit/${participant.id}`}>Edit</Link>
                     </li>
                 ))}
             </ul>
+            <div className="pagination">
+                {[...Array(Math.ceil(filteredParticipants.length / participantsPerPage)).keys()].map(number => (
+                    <button key={number + 1} onClick={() => paginate(number + 1)}>
+                        {number + 1}
+                    </button>
+                ))}
+            </div>
         </div>
     );
 };

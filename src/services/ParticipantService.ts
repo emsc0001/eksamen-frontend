@@ -7,13 +7,13 @@ export const getAllParticipants = async () => {
     return response.data;
 };
 
-export const createParticipant = async (participant: any) => {
-    const response = await axios.post(API_URL, participant);
+export const getParticipantById = async (id: number) => {
+    const response = await axios.get(`${API_URL}/${id}`);
     return response.data;
 };
 
-export const getParticipantById = async (id: number) => {
-    const response = await axios.get(`${API_URL}/${id}`);
+export const createParticipant = async (participant: any) => {
+    const response = await axios.post(API_URL, participant);
     return response.data;
 };
 
@@ -23,5 +23,11 @@ export const updateParticipant = async (id: number, participant: any) => {
 };
 
 export const deleteParticipant = async (id: number) => {
-    await axios.delete(`${API_URL}/${id}`);
+    const response = await axios.delete(`${API_URL}/${id}`);
+    return response.data;
+};
+
+export const searchParticipants = async (query: string) => {
+    const response = await axios.get(`${API_URL}/search?query=${query}`);
+    return response.data;
 };
