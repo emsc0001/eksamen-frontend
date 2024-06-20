@@ -1,0 +1,16 @@
+.discipline-form {
+    padding: 20px;
+}
+
+.discipline-form form {
+    display: flex;
+    flex-direction: column;
+}
+
+.discipline-form label {
+    margin-top: 10px;
+}
+
+.discipline-form input, .discipline-form select, .discipline-form button {
+    margin-top: 5px;
+}

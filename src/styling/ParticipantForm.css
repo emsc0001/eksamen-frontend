@@ -1,0 +1,16 @@
+.participant-form {
+    padding: 20px;
+}
+
+.participant-form form {
+    display: flex;
+    flex-direction: column;
+}
+
+.participant-form label {
+    margin-top: 10px;
+}
+
+.participant-form input, .participant-form select, .participant-form button {
+    margin-top: 5px;
+}

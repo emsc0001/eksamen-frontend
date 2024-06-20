@@ -1,0 +1,17 @@
+.discipline-list {
+    padding: 20px;
+}
+
+.discipline-list ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.discipline-list li {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.discipline-list select, .discipline-list input {
+    margin: 10px;
+}

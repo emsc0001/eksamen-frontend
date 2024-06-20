@@ -1,0 +1,16 @@
+.result-form {
+    padding: 20px;
+}
+
+.result-form form {
+    display: flex;
+    flex-direction: column;
+}
+
+.result-form label {
+    margin-top: 10px;
+}
+
+.result-form input, .result-form select, .result-form button {
+    margin-top: 5px;
+}

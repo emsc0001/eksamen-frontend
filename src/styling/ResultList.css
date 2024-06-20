@@ -1,0 +1,17 @@
+.result-list {
+    padding: 20px;
+}
+
+.result-list ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.result-list li {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.result-list select, .result-list input {
+    margin: 10px;
+}

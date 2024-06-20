@@ -1,0 +1,17 @@
+.participant-list {
+    padding: 20px;
+}
+
+.participant-list ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.participant-list li {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.participant-list select, .participant-list input {
+    margin: 10px;
+}
