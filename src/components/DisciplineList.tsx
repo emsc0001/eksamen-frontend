@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getAllDisciplines } from '../services/DisciplineService';
+import '../styling/DisciplineList.css';
 
 const DisciplineList: React.FC = () => {
     const [disciplines, setDisciplines] = useState<any[]>([]);
@@ -18,7 +19,7 @@ const DisciplineList: React.FC = () => {
     }, []);
 
     return (
-        <div>
+        <div className="discipline-list">
             <h2>Disciplines</h2>
             <Link to="/disciplines/new" className="button">Create New Discipline</Link>
             <ul>

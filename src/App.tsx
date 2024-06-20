@@ -45,6 +45,7 @@ const Header: React.FC = () => {
                     <li><Link to="/disciplines">Disciplines</Link></li>
                     <li><Link to="/results">Results</Link></li>
                     <li><Link to="/results/new">Create Result</Link></li>
+                    <li><Link to="/results/batch">Batch Results</Link></li>
                 </ul>
             </nav>
         </header>
