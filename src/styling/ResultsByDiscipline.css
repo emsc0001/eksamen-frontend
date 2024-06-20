@@ -1,0 +1,49 @@
+.results-by-discipline {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.results-by-discipline h2 {
+    margin-top: 0;
+}
+
+.results-by-discipline ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.results-by-discipline ul li {
+    background-color: #f1f1f1;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.results-by-discipline ul li a {
+    color: #007bff;
+    text-decoration: none;
+    margin-left: 10px;
+}
+
+.results-by-discipline ul li a:hover {
+    text-decoration: underline;
+}
+
+.results-by-discipline .button {
+    display: inline-block;
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+.results-by-discipline .button:hover {
+    background-color: #218838;
+}

@@ -24,7 +24,8 @@ const ResultForm: React.FC = () => {
                 setResult({
                     ...resultData,
                     disciplineId: resultData.discipline.id,
-                    participantId: resultData.participant.id
+                    participantId: resultData.participant.id,
+                    resultType: resultData.discipline.resultType // Assuming resultType is part of discipline
                 });
             }
         };
@@ -36,10 +37,25 @@ const ResultForm: React.FC = () => {
         setResult(prevResult => ({ ...prevResult, [name]: value }));
     };
 
+    const formatResultValue = (resultType: string, value: string) => {
+        switch (resultType) {
+            case 'time':
+                const [hours, minutes, seconds] = value.split(':');
+                return `${hours.padStart(2, '0')}:${minutes.padStart(2, '0')}:${seconds.padStart(2, '0')}`;
+            case 'distance':
+                const [meters, centimeters] = value.split('.');
+                return `${meters}m ${centimeters}cm`;
+            case 'points':
+            default:
+                return value;
+        }
+    };
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         const resultData = {
             ...result,
+            resultValue: formatResultValue(result.resultType, result.resultValue),
             discipline: { id: result.disciplineId },
             participant: { id: result.participantId }
         };
@@ -68,7 +84,9 @@ const ResultForm: React.FC = () => {
                     <select name="disciplineId" value={result.disciplineId} onChange={handleChange} required>
                         <option value="">Select Discipline</option>
                         {disciplines.map(discipline => (
-                            <option key={discipline.id} value={discipline.id}>{discipline.name}</option>
+                            <option key={discipline.id} value={discipline.id}>
+                                {discipline.name} ({discipline.resultType})
+                            </option>
                         ))}
                     </select>
                 </div>

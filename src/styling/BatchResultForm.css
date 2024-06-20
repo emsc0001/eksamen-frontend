@@ -1,29 +1,30 @@
-.discipline-form {
+.batch-result-form {
     background-color: white;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.discipline-form h2 {
+.batch-result-form h2 {
     margin-top: 0;
 }
 
-.discipline-form form {
+.batch-result-form form {
     display: flex;
     flex-direction: column;
 }
 
-.discipline-form form div {
+.batch-result-form form div {
     margin-bottom: 15px;
 }
 
-.discipline-form form label {
+.batch-result-form form label {
     font-weight: bold;
 }
 
-.discipline-form form input[type="text"], 
-.discipline-form form select {
+.batch-result-form form input[type="text"], 
+.batch-result-form form input[type="date"], 
+.batch-result-form form select {
     width: 100%;
     padding: 10px;
     margin-top: 5px;
@@ -32,6 +33,6 @@
     box-sizing: border-box;
 }
 
-.discipline-form form button {
+.batch-result-form form button {
     align-self: flex-end;
 }

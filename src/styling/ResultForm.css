@@ -1,5 +1,12 @@
 .result-form {
+    background-color: white;
     padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.result-form h2 {
+    margin-top: 0;
 }
 
 .result-form form {
@@ -7,10 +14,25 @@
     flex-direction: column;
 }
 
-.result-form label {
-    margin-top: 10px;
+.result-form form div {
+    margin-bottom: 15px;
 }
 
-.result-form input, .result-form select, .result-form button {
+.result-form form label {
+    font-weight: bold;
+}
+
+.result-form form input[type="text"], 
+.result-form form input[type="date"], 
+.result-form form select {
+    width: 100%;
+    padding: 10px;
     margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.result-form form button {
+    align-self: flex-end;
 }

@@ -1,45 +1,38 @@
 .participant-form {
-    background: white;
+    background-color: white;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    max-width: 600px;
-    margin: 0 auto;
 }
 
 .participant-form h2 {
-    text-align: center;
-    color: #4CAF50;
+    margin-top: 0;
 }
 
-.participant-form div {
-    margin-bottom: 1rem;
+.participant-form form {
+    display: flex;
+    flex-direction: column;
 }
 
-.participant-form label {
-    display: block;
-    margin-bottom: 0.5rem;
+.participant-form form div {
+    margin-bottom: 15px;
 }
 
-.participant-form input, .participant-form select {
+.participant-form form label {
+    font-weight: bold;
+}
+
+.participant-form form input[type="text"], 
+.participant-form form input[type="number"], 
+.participant-form form select {
     width: 100%;
     padding: 10px;
-    margin-bottom: 0.5rem;
+    margin-top: 5px;
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
 }
 
-.participant-form button {
-    width: 100%;
-    padding: 10px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.participant-form button:hover {
-    background-color: #45a049;
+.participant-form form button {
+    align-self: flex-end;
 }

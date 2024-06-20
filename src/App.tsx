@@ -8,6 +8,7 @@ import DisciplineForm from './components/DisciplineForm';
 import ResultList from './components/ResultList';
 import ResultForm from './components/ResultForm';
 import ResultsByDiscipline from './components/ResultsByDiscipline';
+import BatchResultForm from './components/BatchResultForm';
 import './index.css';
 
 const App: React.FC = () => {
@@ -22,6 +23,7 @@ const App: React.FC = () => {
                             <li><Link to="/disciplines">Disciplines</Link></li>
                             <li><Link to="/results">Results</Link></li>
                             <li><Link to="/results/new">Create Result</Link></li>
+                            <li><Link to="/results/batch">Batch Create Results</Link></li>
                         </ul>
                     </nav>
                 </header>
@@ -37,6 +39,7 @@ const App: React.FC = () => {
                     <Route path="/results/new" element={<ResultForm />} />
                     <Route path="/results/edit/:id" element={<ResultForm />} />
                     <Route path="/results/discipline/:disciplineId" element={<ResultsByDiscipline />} />
+                    <Route path="/results/batch" element={<BatchResultForm />} />
                 </Routes>
             </div>
         </Router>
